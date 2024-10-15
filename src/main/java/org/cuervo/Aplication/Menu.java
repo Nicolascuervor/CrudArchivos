@@ -69,35 +69,27 @@ public class Menu {
 
 
     public void actualizarRopa(){
-        int busqueda = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID de la ropa para actualizar en el sistema"));
+        int busqueda = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el ID de la ropa para actualizarla al sistema"));
 
-        Ropa ropaNueva = ropaService.obtenerRopa(busqueda);
+        Ropa ropa = ropaService.buscarRopaPorId(busqueda);
+        if (ropa != null) {
+            String marcaNuvea = JOptionPane.showInputDialog("Ingrese la nueva marca de la prenda");
+            if (!marcaNuvea.isEmpty()) {
+                ropa.setMarca(marcaNuvea);
+            }
+            String tipoNuvea = JOptionPane.showInputDialog("Ingrese el nuevo tipo de prenda");
+            if (!tipoNuvea.isEmpty()) {
+                ropa.setTipo(tipoNuvea);
+            }
 
-        if (ropaNueva != null) {
-            int idNuevo = Integer.parseInt(JOptionPane.showInputDialog("Asignele un nuevo id a la prenda"));
-            ropaNueva.setId(idNuevo);
+            int precioNueva = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo precio de la prenda: "));
+            ropa.setPrecio(precioNueva);
 
-
-            String marcaNueva = JOptionPane.showInputDialog("Ingrese la nueva marca de la prenda");
-            ropaNueva.setMarca(marcaNueva);
-
-
-            String tipoNuevo = JOptionPane.showInputDialog("Ingrese el nuevo tipo de prenda");
-            ropaNueva.setTipo(tipoNuevo);
-
-
-            int precioNuevo = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo precio de la prenda"));
-            ropaNueva.setPrecio(precioNuevo);
-
-
-            ropaService.actualizarRopa(ropaNueva);
-
-
-
-            JOptionPane.showMessageDialog(null,"Ropa actualizada correctamente");
-
+            ropaService.actualizarRopa(ropa);
+            JOptionPane.showMessageDialog(null,"Ropa actualizada con éxito");
+        } else {
+            JOptionPane.showMessageDialog(null,"Ropa no encontrada");
         }
-        else JOptionPane.showMessageDialog(null,"ID de ropa no encontrada");
     }
 
 
